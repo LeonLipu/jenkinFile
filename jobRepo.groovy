@@ -1,7 +1,7 @@
 
 def checkout(Map<String,String> dataSet){
 
-sh "mkdir -p ~/workspace"
+
 
   ws("./workspace/${JOB_NAME}/ws") {
 
