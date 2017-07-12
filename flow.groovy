@@ -6,14 +6,25 @@ def pipeline(Map<String,String> dataSet){
   ws("/Users/brahmanandakar/Desktop/jenkin/gitrepo1") {
 
   stage('checkout'){
-      jobs.checkout(dataSet)
-      }
+
+
+    checkout([$class: 'GitSCM',
+    branches: [[name: dataSet.get('seleniumBranch')]],
+    extensions: [[$class: 'CleanCheckout']],
+    userRemoteConfigs: [[credentialsId: dataSet.get('git-id'), url: dataSet.get('seleniumRepoUrl')]]]);
+
+     }
+
   stage('BuildGeneration'){
-           jobs.build(dataSet)
+
+           sh 'mvn install -DskipTests'
+           
           }
 
   stage('Selenium_Automation'){
-          jobs.selenium(dataSet)
+
+      sh 'mvn test'
+
         }
    }
 
