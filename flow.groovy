@@ -7,7 +7,6 @@ def pipeline(Map<String,String> dataSet){
 
   stage('checkout'){
 
-
     checkout([$class: 'GitSCM',
     branches: [[name: dataSet.get('seleniumBranch')]],
     extensions: [[$class: 'CleanCheckout']],
@@ -25,7 +24,7 @@ def pipeline(Map<String,String> dataSet){
   stage('Selenium_Automation'){
 
       sh 'mvn test'
-      junit '**/target/surefire-reports/TEST-*.xml'
+    //  junit '**/target/surefire-reports/TEST-*.xml'
 
         }
    }
