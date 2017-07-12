@@ -3,7 +3,7 @@ def pipeline(Map<String,String> dataSet){
 
   def jobs=load("jobRepo.groovy");
 
-  ws("/Users/brahmanandakar/Desktop/jenkin/gitrepo1") {
+  ws("${WORKSPACE}/ws") {
 
   stage('checkout'){
 
@@ -18,7 +18,7 @@ def pipeline(Map<String,String> dataSet){
   stage('BuildGeneration'){
 
            sh 'mvn install -DskipTests'
-           
+
           }
 
   stage('Selenium_Automation'){
