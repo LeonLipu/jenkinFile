@@ -18,12 +18,14 @@ def pipeline(Map<String,String> dataSet){
   stage('BuildGeneration'){
 
            sh 'mvn install -DskipTests'
+           junit
 
           }
 
   stage('Selenium_Automation'){
 
       sh 'mvn test'
+      junit '**/target/surefire-reports/TEST-*.xml'
 
         }
    }
