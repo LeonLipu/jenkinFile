@@ -17,9 +17,18 @@ def pipeline(Map<String,String> dataSet){
   stage('BuildGeneration'){
 
            sh 'mvn install -DskipTests'
-           
+
 
           }
+
+
+      stage('Server up'){
+
+          sh ' mvn exec:java -Dexec.mainClass="APPLICATION_SERVER.App"'
+
+      }
+
+
 
   stage('Selenium_Automation'){
 
