@@ -14,29 +14,53 @@ def pipeline(Map<String,String> dataSet){
 
      }
 
+
   stage('BuildGeneration'){
 
            sh 'mvn install -DskipTests'
-
-
           }
 
+      parallel(
+                  "serverRunning ":
+                          {
+                              stage('Server up'){
+                                  sh ' mvn exec:java -Dexec.mainClass="APPLICATION_SERVER.App"'
+                              }
 
-      stage('Server up'){
+                          },
+                       "serial ":
+                               {
 
-          sh ' mvn exec:java -Dexec.mainClass="APPLICATION_SERVER.App"'
+                                   sh '''
+                                      ssh http://localhost:8080
+                                    while test $? -gt 0
+                                    do
+                                       sleep 5 # highly recommended - if it's in your local network, it can try an awful lot pretty quick...
+                                       echo "Trying again..."
+                                       ssh $1
+                                    done
 
-      }
+
+                                      '''
+
+
+                                   stage('Selenium_Automation'){
+
+                                       sh 'mvn test'
+                                       junit '**/target/surefire-reports/TEST-*.xml'
+
+                                   }
+                               }
+             )
 
 
 
-  stage('Selenium_Automation'){
 
-      sh 'mvn test'
-     junit '**/target/surefire-reports/TEST-*.xml'
 
-        }
-   }
+
+
+
+   } //end of workspace
 
 }
 
