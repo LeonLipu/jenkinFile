@@ -31,25 +31,14 @@ def pipeline(Map<String,String> dataSet){
                        "serial ":
                                {
 
-                                   sh '''
-                                      ssh http://localhost:8080
-                                    while test $? -gt 0
-                                    do
-                                       sleep 5 # highly recommended - if it's in your local network, it can try an awful lot pretty quick...
-                                       echo "Trying again..."
-                                       ssh $1
-                                    done
-
-
-                                      '''
-
-
                                    stage('Selenium_Automation'){
 
                                        sh 'mvn test'
                                        junit '**/target/surefire-reports/TEST-*.xml'
 
                                    }
+
+
                                }
              )
 
