@@ -35,8 +35,11 @@ def pipeline(Map<String,String> dataSet){
 
                                        sh 'mvn test'
                                        junit '**/target/surefire-reports/TEST-*.xml'
+                                       bat 'FOR /F "tokens=4 delims= " %%P IN (\'netstat -a -n -o ^| findstr :8080\') DO @ECHO TaskKill.exe /PID %%P'
 
                                    }
+
+
 
 
                                }
