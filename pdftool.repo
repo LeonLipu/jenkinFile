@@ -1,0 +1,11 @@
+[pdftoolrepo]
+name="PDFTool Oracle Linux 7 Repository"
+baseurl="file:///scratch/gbuora/workspace/primefield/oracle-linux-7.3/pdftool-0.4.15/"
+gpgcheck=0
+enabled=1
+
+[pdftool-thirdparty-repo]
+name="PDFTool Oracle Linux 7 Repository (third-party)"
+baseurl="file:///scratch/gbuora/workspace/primefield/oracle-linux-7.3/third-party/"
+gpgcheck=0
+enabled=1
